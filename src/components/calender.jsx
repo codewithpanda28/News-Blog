@@ -22,22 +22,8 @@ const calender = () => {
     '7-4': 'Independence Day 🇺🇸',
     '10-31': 'Halloween 🎃',
     '11-24': 'Thanksgiving 🦃',
-    '12-25': 'Christmas 🎄',
-    '12-31': 'New Year\'s Eve 🥂',
-    '1-14': 'Valentine\'s Day 💘',
-    '2-14': 'Valentine\'s Day 💘',
-    '3-17': 'St. Patrick\'s Day 🍀',
-    '4-1': 'April Fool\'s Day 🤡',
-    '7-4': 'Independence Day 🇺🇸',
-    '10-31': 'Halloween 🎃',
-    '11-24': 'Thanksgiving 🦃',
-    '12-25': 'Christmas 🎄',
-    '12-31': 'New Year\'s Eve 🥂',
-    '1-14': 'Valentine\'s Day 💘',
-    '2-14': 'Valentine\'s Day 💘',
-    '3-17': 'St. Patrick\'s Day 🍀',
-    '4-1': 'April Fool\'s Day 🤡',
-    '7-4': 'Independence Day 🇺🇸',
+    '12-31': 'New Year\'s Eve 🥳'
+    
 };
 
   const handlePreviousMonth = () => {

@@ -86,3 +86,10 @@
     font-size: 1.8rem !important;
   
 }
+
+@media (max-width: 900px){
+    .calender{
+        height: 100%;
+    }
+    
+}

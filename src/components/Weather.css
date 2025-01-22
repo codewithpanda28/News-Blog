@@ -78,3 +78,13 @@ font-size: 2rem;
     font-weight: bold;
     margin-right: -1rem;
 }
+
+@media (max-width: 900px) {
+    .weather{
+        height: 100%;
+
+    }
+    .search-location input{
+        width: 30rem;
+    }
+}
