@@ -256,55 +256,58 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
           onDeleteBookmark={handleBookmarkClick}
         />
 
-    {/* my blogs */}
-    <div className="my-blogs">
-      <h1 className="my-blogs-heading">My Blogs</h1>
-      <div className="blog-posts">
-        {blogs.map((blog, index) => (
-          <div
-            key={index}
-            className="blog-post"
-            onClick={() => handleBlogClick(blog)}
-          >
-            <img
-              src={blog.image ? blog.image : noImg}
-              alt={blog.title}
-              onError={(e) => (e.target.src = noImg)}
-              loading="lazy"
-            />
-            <h3>{blog.title}</h3>
-
-            <div className="post-buttons">
-              <button
-                className="edit-post"
-                onClick={() => onEditBlog(blog)}
-              >
-                {" "}
-                <i className="bx bxs-edit"></i>
-              </button>
-              <button
-                className="delete-post"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onDeleteBlog(blog);
-                }}
-              >
-                {" "}
-                <i className="bx bxs-x-circle"></i>
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      {selectedPost && showBlogModal && (
-        <BlogsModal
-          show={showBlogModal}
-          onClose={CloseBlogModal}
-          blog={selectedPost}
+  {/* my blogs */}
+<div className="my-blogs">
+  <h1 className="my-blogs-heading">My Blogs</h1>
+  <div className="blog-posts">
+    {blogs.map((blog, index) => (
+      <div
+        key={index}
+        className="blog-post"
+        onClick={() => handleBlogClick(blog)}
+      >
+        <img
+          src={blog.image ? blog.image : noImg}
+          alt={blog.title}
+          onError={(e) => (e.target.src = noImg)}
+          loading="lazy"
         />
-      )}
-      <BlogsModal />
-    </div>
+        <h3>
+          {blog.title.split(' ').slice(0, 3).join(' ')}
+          {blog.title.split(' ').length > 3 && '...'}
+        </h3>
+
+        <div className="post-buttons">
+          <button
+            className="edit-post"
+            onClick={() => onEditBlog(blog)}
+          >
+            {" "}
+            <i className="bx bxs-edit"></i>
+          </button>
+          <button
+            className="delete-post"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDeleteBlog(blog);
+            }}
+          >
+            {" "}
+            <i className="bx bxs-x-circle"></i>
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+  {selectedPost && showBlogModal && (
+    <BlogsModal
+      show={showBlogModal}
+      onClose={CloseBlogModal}
+      blog={selectedPost}
+    />
+  )}
+  <BlogsModal />
+</div>
 
         <div className="weather-calender">
           {/* weather */}
