@@ -1,7 +1,5 @@
 # Project: CWP - News & Blog
 
-![CWP - News & Blog]([image-path-or-url "Screenshot of CWP - News & Blog](https://github.com/codewithpanda28/News-Blog/blob/main/Screenshot%202025-01-23%20134817.png?raw=true))
-
 ## Description
 CWP - News & Blog is an interactive web platform designed to deliver the latest news and user-generated blogs. It includes powerful features like category-based news filtering, a customizable calendar for planning, weather updates, and bookmarking. Built with user-friendliness in mind, this application seamlessly integrates external APIs for dynamic content and supports full responsiveness across devices.
 ---
