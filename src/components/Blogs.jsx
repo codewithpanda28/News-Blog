@@ -5,7 +5,7 @@ import "./Blogs.css";
 
 const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
   const [showForm, setShowForm] = React.useState(false);
-  const [images, setImages] = React.useState(null);
+  const [image, setImage] = React.useState(null);
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
@@ -14,12 +14,12 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
 
   useEffect(() => {
     if(isEditing && editPost) {
-      setImages(editPost.image);
+      setImage(editPost.image);
       setTitle(editPost.title);
       setContent(editPost.content);
       setShowForm(true);
     }else{
-      setImages(null);
+      setImage(null);
       setTitle("");
       setContent("");
       setShowForm(false);
@@ -27,7 +27,7 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
   }, [isEditing, editPost]);
 
   const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if(e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
       const maxSize = 1 * 1024 * 1024;
@@ -39,9 +39,9 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
 
       const reader = new FileReader();
       reader.onloadend = () => {
-        showImages(reader.result);
+        setImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -63,14 +63,14 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
       return;
     }
     const newBlog = {
-      images: images || noImg,
+      image ,
       title,
       content,
     };
     onCreateBlog(newBlog, isEditing);
     setTitle("");
     setContent("");
-    setImages(null); // Reset images state
+    setImage(null); // Reset images state
     setShowForm(false);
     setSubmitted(true);
     setTimeout(() => {

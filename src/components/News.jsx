@@ -23,7 +23,9 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [bookmarks, setBookmarks] = useState([]); // Fixed variable name
+  const [bookmarks, setBookmarks] = useState(() => {
+    return JSON.parse(localStorage.getItem("bookmarks")) || [];
+  }); // Initialize bookmarks from local storage
   const [showBookmarksModal, setShowBookmarksModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [showBlogModal, setShowBlogModal] = useState(false);
@@ -41,8 +43,6 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
       } catch (error) {
         console.error("Error fetching news:", error); // Added error handling
       }
-      const saveBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-      setBookmarks(saveBookmarks); // Load bookmarks from local storage
     };
 
     fetchNews();
@@ -65,6 +65,10 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
 
     fetchSearchResults();
   }, [searchQuery]);
+
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]); // Save bookmarks to local storage whenever they change
 
   const handleCategoryChange = (e, category) => {
     e.preventDefault();
@@ -101,14 +105,12 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
 
   const handleBookmarkClick = (article) => {
     setBookmarks((prevBookmarks) => {
-      const updateBookmark = prevBookmarks.find(
+      const updatedBookmarks = prevBookmarks.find(
         (bookmark) => bookmark.title === article.title
-      );
-      const newBookmarks = updateBookmark
-        ? prevBookmarks
+      )
+        ? prevBookmarks.filter((bookmark) => bookmark.title !== article.title)
         : [...prevBookmarks, article];
-      localStorage.setItem("bookmarks", JSON.stringify(newBookmarks)); // Save updated bookmarks to local storage
-      return newBookmarks;
+      return updatedBookmarks;
     });
   };
 
@@ -163,8 +165,8 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
                   key={index}
                   href="#"
                   className="nav-link"
-                  onClick={(e) =>
-                    handleCategoryChange(e, category.toLowerCase())
+                  onClick={() => setShowBookmarksModal(true)
+                   
                   }
                 >
                   {category}
@@ -206,7 +208,9 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
                       ? "fa-solid"
                       : "fa-regular"
                   } fa-bookmark bookmark`}
-                  onClick={() => handleBookmarkClick(headline)}
+                  onClick={(e) =>{ 
+                    e.stopPropagation()
+                    handleBookmarkClick(headline)}}
                 ></i>
               </h2>
             </div>
@@ -230,7 +234,9 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
                         ? "fa-solid"
                         : "fa-regular"
                     } fa-bookmark bookmark`}
-                    onClick={() => handleBookmarkClick(article)}
+                    onClick={(e) =>{
+                      e.stopPropagation()
+                      handleBookmarkClick(article)}}
                   ></i>
                 </h3>
               </div>
@@ -244,63 +250,61 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
         />
         <Bookmarks
           show={showBookmarksModal}
-          article={selectedArticle}
           bookmarks={bookmarks}
-          onSelectedBookmark={setSelectedArticle}
-          onDeleteBookmark={(article) =>
-            setBookmarks(bookmarks.filter((b) => b.title !== article.title))
-          }
           onClose={() => setShowBookmarksModal(false)}
+          onSelectBookmark={handleArticleClick}
+          onDeleteBookmark={handleBookmarkClick}
         />
 
-        {/* my blogs */}
-        <div className="my-blogs">
-          <h1 className="my-blogs-heading">My Blogs</h1>
-          <div className="blog-posts">
-            {blogs.map((blog, index) => (
-              <div
-                key={index}
-                className="blog-post"
-                onClick={() => handleBlogClick(blog)}
-              >
-                <img
-                  src={blog.image ? blog.image : noImg}
-                  alt={blog.title}
-                  onError={(e) => (e.target.src = noImg)}
-                />
-                <h3>{blog.title}</h3>
-
-                <div className="post-buttons">
-                  <button
-                    className="edit-post"
-                    onClick={() => onEditBlog(blog)}
-                  >
-                    {" "}
-                    <i className="bx bxs-edit"></i>
-                  </button>
-                  <button
-                    className="delete-post"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDeleteBlog(blog);
-                    }}
-                  >
-                    {" "}
-                    <i className="bx bxs-x-circle"></i>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          {selectedPost && showBlogModal && (
-            <BlogsModal
-              show={showBlogModal}
-              onClose={CloseBlogModal}
-              blog={selectedPost}
+    {/* my blogs */}
+    <div className="my-blogs">
+      <h1 className="my-blogs-heading">My Blogs</h1>
+      <div className="blog-posts">
+        {blogs.map((blog, index) => (
+          <div
+            key={index}
+            className="blog-post"
+            onClick={() => handleBlogClick(blog)}
+          >
+            <img
+              src={blog.image ? blog.image : noImg}
+              alt={blog.title}
+              onError={(e) => (e.target.src = noImg)}
+              loading="lazy"
             />
-          )}
-          <BlogsModal />
-        </div>
+            <h3>{blog.title}</h3>
+
+            <div className="post-buttons">
+              <button
+                className="edit-post"
+                onClick={() => onEditBlog(blog)}
+              >
+                {" "}
+                <i className="bx bxs-edit"></i>
+              </button>
+              <button
+                className="delete-post"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteBlog(blog);
+                }}
+              >
+                {" "}
+                <i className="bx bxs-x-circle"></i>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      {selectedPost && showBlogModal && (
+        <BlogsModal
+          show={showBlogModal}
+          onClose={CloseBlogModal}
+          blog={selectedPost}
+        />
+      )}
+      <BlogsModal />
+    </div>
 
         <div className="weather-calender">
           {/* weather */}

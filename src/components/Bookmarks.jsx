@@ -6,7 +6,11 @@ import './Bookmarks.css'
 const Bookmarks = ({show, onClose, bookmarks, onDeleteBookmark, onSelectBookmark}) => {
   useEffect(() => {
     if (bookmarks) {
-      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      try {
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      } catch (error) {
+        console.error('Failed to save bookmarks to localStorage:', error);
+      }
     }
   }, [bookmarks]);
 
