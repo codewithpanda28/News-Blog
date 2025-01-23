@@ -2,7 +2,9 @@
 
 ## Description
 CWP - News & Blog is an interactive web platform designed to deliver the latest news and user-generated blogs. It includes powerful features like category-based news filtering, a customizable calendar for planning, weather updates, and bookmarking. Built with user-friendliness in mind, this application seamlessly integrates external APIs for dynamic content and supports full responsiveness across devices.
-Live Preview: https://cwp-news-blog.netlify.app/
+---
+
+**Live Preview**: https://cwp-news-blog.netlify.app/
 
 ---
 
