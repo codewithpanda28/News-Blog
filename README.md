@@ -79,7 +79,7 @@ CWP - News & Blog is an interactive web platform designed to deliver the latest 
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/codewithpanda28/News-Blog.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -126,8 +126,9 @@ This project is developed and owned by CodeWithPanda. All rights reserved. Redis
 ## Social Media and Personal Details
 - **Creator**: CodeWithPanda
 - **Email**: codewithpanda28@gmail.com
-- **GitHub**: [your-github-profile-link]
+- **GitHub**: https://github.com/codewithpanda28
 - **LinkedIn**: https://www.linkedin.com/in/codewithpanda28
+- **WhatsApp**: +91 8252472186
 
 ---
 
