@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"; // Added useEffect import
 import Weather from "./Weather";
-import Calender from "./calender";
+import Calender from "src/components/calender.jsx";
 import "./News.css";
 import userImg from "../assets/images/user.jpg";
 import techImg from "../assets/images/tech.jpg";
